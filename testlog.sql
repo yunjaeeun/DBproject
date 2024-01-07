@@ -30,7 +30,7 @@ SELECT
   FROM billboard
  WHERE freeboard = 4;
 
--- 3-2. 신고내역 처리 (신고 내역 중 하나는 기준에 부합하지 않아 기각)
+-- 3-2. 신고내역 처리 (신고 내역 중 하나는 기준에 부합하지 않아 기각) , 신고 당한 게시물 삭제 추가
 SELECT * FROM wlop_member;
 UPDATE wlop_member
    SET report_num = report_num + 1
