@@ -1,9 +1,4 @@
-SELECT * FROM membergrade;
-SELECT * FROM wlop_member;
-SELECT * FROM review;
-SELECT * FROM wlop_comment;
-
-
+-- 작성 했던 게시물 수 컬럼 추가
 ALTER TABLE wlop_member
 ADD review_count INT NOT NULL,
 ADD comment_count INT NOT NULL,
@@ -13,6 +8,7 @@ ADD freeboard_count INT NOT NULL;
 
 DESC wlop_member;
 
+-- 회원이 게시물을 작성하면 작성했던 게시물 수가 1이 오르도록 트리거 설정
 ALTER TABLE wlop_member
 ADD grade_review INT NOT NULL;
 
@@ -28,6 +24,7 @@ END;
 //
 DELIMITER ;
 
+-- 일정 게시물수가 되면 등급이 오르도록 트리거 설정
 DELIMITER //
 CREATE TRIGGER update_member_grade
 AFTER INSERT ON review
@@ -56,5 +53,3 @@ SELECT
 		 *
   FROM wlop_member
  WHERE member_name = '윤재은'; 
-
-
