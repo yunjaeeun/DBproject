@@ -35,18 +35,30 @@ SELECT * FROM wlop_member;
 UPDATE wlop_member
    SET report_num = report_num + 1
  WHERE member_id = 'baekdonghyeon';
- 
+
+UPDATE billboard
+	SET use_yn = 'N'
+ WHERE freeboard = 4;
+	
  SELECT * FROM wlop_member;
 UPDATE wlop_member
    SET report_num = report_num + 1
  WHERE member_id = 'kimjaehyeon';
 
+UPDATE wlop_comment
+	SET use_yn = 'N'
+ WHERE comment_code = 2;
  
 SELECT * FROM wlop_member;
 UPDATE wlop_member
    SET report_num = report_num + 1
  WHERE member_id = 'yunjaeeun';
+ 
+UPDATE billboard
+	SET use_yn = 'N'
+ WHERE freeboard = 1;
 
+-- 4. 처리 후 신고 진행 상태 변경.
 UPDATE report
    SET report_now_code = 3
  WHERE report_now_code = 2;

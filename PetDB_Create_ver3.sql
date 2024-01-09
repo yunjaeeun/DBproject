@@ -6,10 +6,11 @@ CREATE TABLE `WLOP_Member` (
    `member_address`   varchar(255)NOT NULL,
    `member_call`   varchar(255)   NOT NULL,
    `member_email`   varchar(255)   NOT NULL,
-   `member_nick`   varchar(255)   NOT NULL,
+   `member_nick`   varchar(255)   NOT NULL UNIQUE,
    `member_date`   varchar(255)   NOT NULL,
    `report_num`   int   NOT NULL   COMMENT '신고접수 후 관리자가 삭제한 횟수',
-   `grade_code`   int   NOT NULL
+   `grade_code`   int   NOT NULL DEFAULT 1
+   `review_count` INT NOT NULL,
 );
 
 CREATE TABLE `WLOP_Type` (
@@ -94,9 +95,7 @@ CREATE TABLE `Report` (
 
 CREATE TABLE `WLOP_Profile` (
    `Member_ID`   varchar(255)   NOT NULL PRIMARY KEY,
-   `location`   varchar(255)   NULL   COMMENT '주인의 거주지역',
    `my_introduce`   varchar(255)   NULL,
-   `my_nickname`   varchar(255)   NOT NULL
 );
 
 CREATE TABLE `Blacklist` (
@@ -161,7 +160,8 @@ CREATE TABLE `Notification` (
 
 CREATE TABLE `Animal_type_category` (
    `type_code`   int   NOT NULL,
-   `animal_code`   int   NOT NULL
+   `animal_code`   int   NOT NULL,
+   PRIMARY KEY (type_code, animal_code)
 );
 
 CREATE TABLE `Goods` (
@@ -184,6 +184,35 @@ CREATE TABLE `Photo` (
    `Member_ID` VARCHAR(255)  NULL 
 );
 
+CREATE TABLE `like_count` (
+	`count_code` INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+	`member_id` VARCHAR(255) NOT NULL,
+	`freeboard` INT NULL,
+	`review_code` INT NULL,
+	`total_count` INT NULL,
+);
+
+
+ALTER TABLE `like_count` ADD CONSTRAINT `FK_wlop_member_to_like_conut_1` FOREIGN KEY (
+	`member_id`
+)
+REFERENCES `wlop_member` (
+	`member_id`
+);
+
+ALTER TABLE `like_count` ADD CONSTRAINT `FK_billboard_to_like_conut_2` FOREIGN KEY (
+	`freeboard`
+)
+REFERENCES `billboard` (
+	`freeboard`
+);
+
+ALTER TABLE `like_count` ADD CONSTRAINT `FK_review_to_like_conut_3` FOREIGN KEY (
+	`review_code`
+)
+REFERENCES `review` (
+	`review_code`
+);
 
 ALTER TABLE `WLOP_Member` ADD CONSTRAINT `FK_MemberGrade_TO_Member_1` FOREIGN KEY (
    `grade_code`

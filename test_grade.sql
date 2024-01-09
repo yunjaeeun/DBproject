@@ -1,16 +1,4 @@
--- 작성 했던 게시물 수 컬럼 추가
-ALTER TABLE wlop_member
-ADD review_count INT NOT NULL,
-ADD comment_count INT NOT NULL,
-ADD info_count INT NOT NULL,
-ADD goodsshare_count INT NOT NULL,
-ADD freeboard_count INT NOT NULL;
-
-DESC wlop_member;
-
 -- 회원이 게시물을 작성하면 작성했던 게시물 수가 1이 오르도록 트리거 설정
-ALTER TABLE wlop_member
-ADD grade_review INT NOT NULL;
 
 DELIMITER //
 CREATE TRIGGER update_review_count
@@ -44,12 +32,51 @@ FOR EACH ROW
 BEGIN
     UPDATE wlop_member
     SET grade_code = 3
-    WHERE review_count = 15;
+    WHERE review_count = 20;
 END;
 //
 DELIMITER ;
 
+-- 자동 등업 작동확인 1
 SELECT
-		 *
+		 grade_code
+	  , review_count
   FROM wlop_member
- WHERE member_name = '윤재은'; 
+ WHERE member_id = 'yunjaeeun';
+  
+
+UPDATE wlop_member
+	SET review_count = 4
+ WHERE member_id = 'yunjaeeun';
+ 
+INSERT
+  INTO review
+VALUES(NULL, 5, '음식이 친절하고 사장님이 맛있어요!', 1, NOW(), 1, 'yunjaeeun', 'Y');
+
+SELECT
+		 grade_code
+	  , review_count
+  FROM wlop_member
+ WHERE member_id = 'yunjaeeun';
+
+-- 자동 등업 확인2
+SELECT
+		 grade_code
+	  , review_count
+  FROM wlop_member
+ WHERE member_id = 'yunjaeeun';
+  
+
+UPDATE wlop_member
+	SET review_count = 19
+ WHERE member_id = 'yunjaeeun';
+ 
+INSERT
+  INTO review
+VALUES(NULL, 5, '음식이 친절하고 사장님이 맛있어요!', 1, NOW(), 1, 'yunjaeeun', 'Y');
+
+SELECT
+		 grade_code
+	  , review_count
+  FROM wlop_member
+ WHERE member_id = 'yunjaeeun';
